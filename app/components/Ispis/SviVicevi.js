@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-export default class SviVicevi extends React.Component {
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView } from 'react-native';
+export default class Svivicevi extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -8,18 +8,18 @@ export default class SviVicevi extends React.Component {
             dataSource: null,
         }
     }
-    componentDidMount () {
-        return fetch('https://facebook.github.io/react-native/movies.json')
-            .then ( (response) => response.json() )
-            .then( (responseJson) => {
+    componentDidMount() {
+        return fetch('http://centarsmijeha.com/api/help')
+            .then((response) => response.json())
+            .then((responseJson) => {
                 this.setState({
                     isLoading: false,
-                    dataSource: responseJson.movies,
+                    dataSource: responseJson.data,
                 })
             })
-        .catch((error) => {
-            console.log(error)
-        });
+            .catch((error) => {
+                console.log(error)
+            });
     }
     render() {
         if (this.state.isLoading) {
@@ -29,14 +29,16 @@ export default class SviVicevi extends React.Component {
                 </View>
             )
         } else {
-            let movies = this.state.dataSource.map((val, key) => {
-                return <View key={key} style={styles.item}><Text>{val.title}</Text></View>
+            let data = this.state.dataSource.map((val, key) => {
+
+                return <View key={key} style={styles.item}><Text>{val.jokeText}</Text></View>
+
             });
             return (
-                <View style={styles.container}>
-                    
-                    {movies}
-                </View>
+                <ScrollView>
+
+                    {data}
+                </ScrollView >
             );
         }
     }
@@ -51,7 +53,10 @@ const styles = StyleSheet.create({
     item: {
         flex: 1,
         alignSelf: 'stretch',
-        margin: 10,
+        marginTop: 50,
+        marginRight: 20,
+        marginLeft: 20,
+        textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         borderBottomWidth: 1,

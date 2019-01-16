@@ -1,20 +1,24 @@
-import React, {Component} from 'react';
-import {AppRegistry, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { AppRegistry, Text, View } from 'react-native';
 
 import SviVicevi from './app/components/Ispis/SviVicevi';
+import Alljokes from './app/components/Ispis/AllJokes';
+import Index from './app/components/index';
 
 export default class centarsmijeha extends Component {
 
 
 
-  render(){
+  render() {
 
-    return(
+    return (
       <View>
+
+
         <SviVicevi />
       </View>
     );
   }
 }
 
-AppRegistry.registerComponent('centarsmijeha', ()=> centarsmijeha);
+AppRegistry.registerComponent('centarsmijeha', () => centarsmijeha);
