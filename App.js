@@ -1,24 +1,8 @@
-import React, { Component } from 'react';
-import { AppRegistry, Text, View } from 'react-native';
+import React from "react";
+import { View, Text, Button } from "react-native";
+import { createAppContainer } from "react-navigation";
 
-import SviVicevi from './app/components/Ispis/SviVicevi';
-import Categorynavbar from './app/components/navbars/categoryNavbar';
+//TABS
+import { Tabs } from './app/config/router';
 
-
-export default class centarsmijeha extends Component {
-
-
-
-  render() {
-
-    return (
-      <View>
-
-        <Categorynavbar />
-        <SviVicevi />
-      </View>
-    );
-  }
-}
-
-AppRegistry.registerComponent('centarsmijeha', () => centarsmijeha);
+export default createAppContainer(Tabs);
