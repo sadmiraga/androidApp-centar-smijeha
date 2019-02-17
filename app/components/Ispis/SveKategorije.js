@@ -29,7 +29,6 @@ export default class SveKategorije extends React.Component {
             });
     }
     render() {
-        console.log(this.props.navigation)
 
         if (this.state.isLoading) {
             return (
@@ -40,11 +39,16 @@ export default class SveKategorije extends React.Component {
         } else {
             let data = this.state.dataSource.map((val, key) => {
 
+
+
                 return (
+
+
                     <View key={key} style={styles.item}>
 
+
                         <Button
-                            onPress={() => this.props.navigation.navigate('ViceviPoKategoriji')}
+                            onPress={() => this.props.navigation.navigate('ViceviPoKategoriji', { ID: val.id, naslov: val.categoryName, })}
                             title={val.categoryName}
                         />
                     </View>

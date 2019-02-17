@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ActivityIndicator, ScrollView } from 'react-nat
 
 
 export default class ViceviPoKategoriji extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -10,8 +11,18 @@ export default class ViceviPoKategoriji extends React.Component {
             dataSource: null,
         }
     }
+
+
+    //title
+    static navigationOptions = ({ navigation, screenProps }) => ({
+        title: navigation.state.params.naslov,
+    });
+
+
     componentDidMount() {
-        return fetch('http://centarsmijeha.com/api/jokesByCategory/16')
+        var test = 'http://centarsmijeha.com/api/jokesByCategory/';
+        var final = `${test} ${this.props.navigation.state.params.ID}`;
+        return fetch(final)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
@@ -22,8 +33,11 @@ export default class ViceviPoKategoriji extends React.Component {
             .catch((error) => {
                 console.log(error)
             });
+
     }
     render() {
+        //{this.props.navigation.state.params.naslov}
+
         if (this.state.isLoading) {
             return (
                 <View style={styles.container}>
@@ -38,7 +52,6 @@ export default class ViceviPoKategoriji extends React.Component {
             });
             return (
                 <ScrollView>
-
                     {data}
                 </ScrollView >
             );
