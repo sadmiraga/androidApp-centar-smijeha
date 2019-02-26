@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Button, TouchableOpacity } from 'react-native';
 import { createStackNavigator, createAppContainer, StackNavigator, navigate } from 'react-navigation';
-
 
 export default class SveKategorije extends React.Component {
     constructor(props) {
@@ -47,10 +46,14 @@ export default class SveKategorije extends React.Component {
                     <View key={key} style={styles.item}>
 
 
-                        <Button
+
+                        <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('ViceviPoKategoriji', { ID: val.id, naslov: val.categoryName, })}
-                            title={val.categoryName}
-                        />
+                        >
+                            <Text> {val.categoryName} </Text>
+                        </TouchableOpacity>
+
+
                     </View>
                 );
 

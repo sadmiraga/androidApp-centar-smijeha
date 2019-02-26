@@ -3,49 +3,49 @@ import {
     Text,
     View,
     ScrollView,
-    Button
+    Button,
+    TextInput,
+    KeyboardAvoidingView,
+    AsyncStorage,
+    TouchableOpacity,
 } from 'react-native';
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator, createAppContainer, StackNavigator, navigate } from 'react-navigation';
 
 
-class Me extends React.Component {
+export default class Me extends React.Component {
 
     render() {
         return (
             <View>
-                <Text>
-                    Moj Profil
-                </Text>
-                <Button
-                    onPress={() => this.props.navigation.navigate('Omeni')}
-                    title="OK"
-                />
+
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Login')}
+                >
+                    <Text> Prijava </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Register')}
+                >
+                    <Text> Registracija </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('SendJoke')}
+                >
+                    <Text> Posaljite vic </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('AdminPanel')}
+                >
+                    <Text> Admin Panel </Text>
+                </TouchableOpacity>
+
+
             </View>
         );
     }
 }
 
-class Omeni extends React.Component {
 
-    render() {
-        return (
-            <View>
-                <Text>
-                    O meni
-          </Text>
-            </View>
-        );
-    }
-}
-
-export default BRUDA = createStackNavigator({
-
-    ME: {
-        screen: Me,
-    },
-
-    Omeni: {
-        screen: Omeni,
-    },
-
-});

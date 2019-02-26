@@ -13,6 +13,7 @@ export default class ViceviPoKategoriji extends React.Component {
     }
 
 
+
     //title
     static navigationOptions = ({ navigation, screenProps }) => ({
         title: navigation.state.params.naslov,
