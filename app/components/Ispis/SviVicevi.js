@@ -1,13 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
 export default class Svivicevi extends React.Component {
+
+    //CONSTRUCTOR
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
             dataSource: null,
+            refreshing: false,
         }
     }
+
+    //loading data
     componentDidMount() {
         return fetch('http://centarsmijeha.com/api/help')
             .then((response) => response.json())
@@ -21,6 +26,17 @@ export default class Svivicevi extends React.Component {
                 console.log(error)
             });
     }
+
+    //refreshing
+    handleRefresh() {
+        this.componentDidMount();
+
+        this.setState({
+            refreshing: false
+        })
+    }
+
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -35,9 +51,17 @@ export default class Svivicevi extends React.Component {
 
             });
             return (
-                <ScrollView>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            onRefresh={() => this.handleRefresh()}
+                            refreshing={this.state.refreshing}
+                        />
+                    }
+                >
 
                     {data}
+
                 </ScrollView >
             );
         }

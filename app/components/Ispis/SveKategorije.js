@@ -1,19 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Button, TouchableOpacity, RefreshControl } from 'react-native';
 import { createStackNavigator, createAppContainer, StackNavigator, navigate } from 'react-navigation';
 
 export default class SveKategorije extends React.Component {
+
+    //CONSTRUCTOR
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            dataSource: null
+            dataSource: null,
+            refreshing: false,
         }
     }
 
 
 
-
+    //loading data
     componentDidMount() {
         return fetch('http://centarsmijeha.com/api/allCategories')
             .then((response) => response.json())
@@ -27,6 +30,17 @@ export default class SveKategorije extends React.Component {
                 console.log(error)
             });
     }
+
+    //refreshing
+    handleRefresh() {
+        this.componentDidMount();
+
+        this.setState({
+            refreshing: false
+        })
+    }
+
+
     render() {
 
         if (this.state.isLoading) {
@@ -59,7 +73,14 @@ export default class SveKategorije extends React.Component {
 
             });
             return (
-                <ScrollView>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            onRefresh={() => this.handleRefresh()}
+                            refreshing={this.state.refreshing}
+                        />
+                    }
+                >
 
                     {data}
                 </ScrollView >

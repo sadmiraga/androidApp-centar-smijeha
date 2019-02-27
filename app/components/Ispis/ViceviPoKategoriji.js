@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
 
 
 export default class ViceviPoKategoriji extends React.Component {
 
+    //constructor
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +20,7 @@ export default class ViceviPoKategoriji extends React.Component {
         title: navigation.state.params.naslov,
     });
 
-
+    //loading data
     componentDidMount() {
         var test = 'http://centarsmijeha.com/api/jokesByCategory/';
         var final = `${test} ${this.props.navigation.state.params.ID}`;
@@ -34,8 +35,18 @@ export default class ViceviPoKategoriji extends React.Component {
             .catch((error) => {
                 console.log(error)
             });
-
     }
+
+    //refreshing
+    handleRefresh() {
+        this.componentDidMount();
+
+        this.setState({
+            refreshing: false
+        })
+    }
+
+
     render() {
         //{this.props.navigation.state.params.naslov}
 
@@ -52,7 +63,14 @@ export default class ViceviPoKategoriji extends React.Component {
 
             });
             return (
-                <ScrollView>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            onRefresh={() => this.handleRefresh()}
+                            refreshing={this.state.refreshing}
+                        />
+                    }
+                >
                     {data}
                 </ScrollView >
             );
