@@ -9,6 +9,7 @@ import {
     AsyncStorage,
     TouchableOpacity,
     StyleSheet,
+    Alert
 } from 'react-native';
 import { createStackNavigator } from "react-navigation";
 
@@ -24,9 +25,31 @@ function konzola() {
 
 export default class SendJoke extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            vic: ''
+        }
+    }
+
     testKonzola() {
         console.warn('BRIJAAAA');
     }
+
+
+    jokeSentNotification() {
+        Alert.alert(
+            "Vic poslan",
+            "Vaš vic je poslan, prije nego što vic bude objavljen potrebno je da bude odobren od strane admina.",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+        );
+
+    }
+
+
 
 
 
@@ -49,6 +72,9 @@ export default class SendJoke extends React.Component {
         this.setState({
             vic: ''
         })
+
+        this.jokeSentNotification();
+
     }
 
 
@@ -57,7 +83,10 @@ export default class SendJoke extends React.Component {
 
 
 
-            <View>
+            <KeyboardAvoidingView
+
+                behavior="padding"
+            >
 
                 <TextInput style={styles.unosTexta}
                     placeholder='Text vaseg vica'
@@ -71,11 +100,12 @@ export default class SendJoke extends React.Component {
                 <TouchableOpacity
                     onPress={() => this.posalji(this.state.vic)}
                 >
-                    <Text> Posaljite </Text>
+                    <Text style={styles.posaljiDugme}> Posaljite </Text>
                 </TouchableOpacity>
 
 
-            </View>
+
+            </KeyboardAvoidingView>
 
         );
     }
@@ -89,6 +119,16 @@ const styles = StyleSheet.create({
         marginLeft: '15%',
         marginRight: '15%'
 
+    },
+
+    posaljiDugme: {
+        backgroundColor: '#00B2EE',
+        textAlign: 'center',
+        color: 'white',
+        width: '70%',
+        marginLeft: '15%',
+        marginRight: '15%',
+        marginTop: '2%'
     }
 
 

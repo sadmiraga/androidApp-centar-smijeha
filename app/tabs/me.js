@@ -8,6 +8,7 @@ import {
     KeyboardAvoidingView,
     AsyncStorage,
     TouchableOpacity,
+    StyleSheet,
 } from 'react-native';
 import { createStackNavigator, createAppContainer, StackNavigator, navigate } from 'react-navigation';
 
@@ -16,36 +17,49 @@ export default class Me extends React.Component {
 
     render() {
         return (
-            <View>
+            <ScrollView>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('Login')}
                 >
-                    <Text> Prijava </Text>
+                    <Text style={styles.dugme}> Prijava </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('Register')}
                 >
-                    <Text> Registracija </Text>
+                    <Text style={styles.dugme}> Registracija </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('SendJoke')}
                 >
-                    <Text> Posaljite vic </Text>
+                    <Text style={styles.dugme}> Posaljite vic </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('AdminPanel')}
                 >
-                    <Text> Admin Panel </Text>
+                    <Text style={styles.dugme}> Admin Panel </Text>
                 </TouchableOpacity>
 
 
-            </View>
+            </ScrollView>
         );
     }
 }
 
 
+const styles = StyleSheet.create({
+
+    dugme: {
+        backgroundColor: '#00B2EE',
+        textAlign: 'center',
+        color: 'white',
+        width: '70%',
+        marginLeft: '15%',
+        marginRight: '15%',
+        marginTop: '2%'
+    }
+
+});

@@ -50,7 +50,7 @@ export default class SveKategorije extends React.Component {
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate('ViceviPoKategoriji', { ID: val.id, naslov: val.categoryName, })}
                         >
-                            <Text> {val.categoryName} </Text>
+                            <Text style={styles.dugme}> {val.categoryName} </Text>
                         </TouchableOpacity>
 
 
@@ -87,5 +87,14 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    dugme: {
+        backgroundColor: '#00B2EE',
+        textAlign: 'center',
+        color: 'white',
+        width: '70%',
+        marginLeft: '15%',
+        marginRight: '15%',
+        marginTop: '2%'
     }
 });
