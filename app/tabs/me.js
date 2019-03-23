@@ -15,15 +15,45 @@ import { createStackNavigator, createAppContainer, StackNavigator, navigate } fr
 
 export default class Me extends React.Component {
 
+    //constructor
+    constructor(props) {
+        super(props);
+        this.state = {
+            loggedin: false,
+            name: 'test',
+        }
+    }
+
+    //provjeriti da li je user prijavljen 
+    /* async componentDidMount() {
+        let user = await AsyncStorage.getItem('korisnik');
+
+        if (user != null) {
+
+            let parsed = JSON.parse(user);
+
+            this.setState({
+                loggedin: true,
+                name: parsed.name,
+            });
+        }
+    } */
+
     render() {
+
+
+
         return (
             <ScrollView>
+
+                <Text> {this.state.name} </Text>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('Login')}
                 >
                     <Text style={styles.dugme}> Prijava </Text>
                 </TouchableOpacity>
+
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('Register')}
