@@ -40,11 +40,11 @@ export default class Me extends React.Component {
                 loggedin: true
             });
 
-            console.warn(this.state.name);
+            //console.warn(this.state.name);
 
         }
 
-        console.warn(this.state.loggedin);
+        //console.warn(this.state.loggedin);
 
     }
 
@@ -114,11 +114,7 @@ export default class Me extends React.Component {
                     <Text style={styles.dugme}> Posaljite vic </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('AdminPanel')}
-                >
-                    <Text style={styles.dugme}> Admin Panel </Text>
-                </TouchableOpacity>
+
 
 
 

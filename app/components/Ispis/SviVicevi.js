@@ -8,7 +8,9 @@ import {
     ScrollView,
     RefreshControl,
     TouchableOpacity,
+    Alert
 } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 export default class Svivicevi extends React.Component {
 
     //CONSTRUCTOR
@@ -19,6 +21,7 @@ export default class Svivicevi extends React.Component {
             dataSource: null,
             refreshing: false,
             showLikes: false,
+            userId: 1,
         }
     }
 
@@ -31,11 +34,13 @@ export default class Svivicevi extends React.Component {
 
         if (value != null) {
             this.setState({
-                showLikes: true
+                showLikes: true,
+                userId: value,
             });
         }
 
-        console.warn(this.state.showLikes);
+
+        //console.warn(this.state.showLikes);
 
         //get All jokes
         return fetch('http://centarsmijeha.com/api/help')
@@ -62,9 +67,71 @@ export default class Svivicevi extends React.Component {
     }
 
 
-    likeFunction(ID) {
 
-        console.warn(ID);
+    async likeFunction(jokeID) {
+
+        //get user data
+        let value = await AsyncStorage.getItem('userID');
+
+        if (value != null) {
+            this.setState({
+                showLikes: true,
+                userId: value
+            });
+        } else {
+            this.setState({
+                showLikes: false,
+                userId: 1
+            })
+        }
+
+
+        //check if user is logged in 
+        if ((this.state.userId) == 1) {
+
+            Alert.alert(
+                'Sviđa mi se',
+                "Morate se prijaviti da bi viceve označavali sa 'sviđa mi se' ",
+                [
+                    { text: 'Ok', onPress: () => console.log('ok Pressed') },
+                    //MeHome
+                ],
+                { cancelable: false },
+            );
+        } else {
+            //USER IS LOGGED IN 
+            //EXECUTE LIKE FUNCTION 
+
+            fetch('http://centarsmijeha.com/api/like', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'userID': this.state.userId,
+                    'jokeID': jokeID
+                })
+            }).then(response => response.json())
+                .then(response => {
+
+                    Alert.alert(
+                        'Sviđa mi se',
+                        response.message,
+                        [
+                            { text: 'Ok', onPress: () => console.log('ok Pressed') },
+                            //MeHome
+                        ],
+                        { cancelable: false },
+                    );
+
+                })
+
+            //kraj else
+        }
+
+
+        //kraj funkcije
     }
 
 
@@ -76,10 +143,23 @@ export default class Svivicevi extends React.Component {
                 </View>
             )
         } else {
+
+
+
             let data = this.state.dataSource.map((val, key) => {
 
                 return <View key={key} style={styles.item}>
+
                     <Text>{val.jokeText}</Text>
+
+                    <TouchableOpacity
+                        onPress={() => this.likeFunction(val.id)}
+                    >
+                        <Text style={styles.likeButton} >
+                            Sviđa mi se
+                        </Text>
+                    </TouchableOpacity>
+
 
                 </View>
 
@@ -119,6 +199,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: '#eee'
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: 'black'
+    },
+    likeButton: {
+        backgroundColor: '#00B2EE',
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
     }
 });

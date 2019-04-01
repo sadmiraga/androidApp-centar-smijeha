@@ -109,7 +109,7 @@ export default class Login extends React.Component {
 
 
     restartAppAfterLogin() {
-        console.warn('Restart App');
+        //console.warn('Restart App');
         //        Me.ComponentDidMount();
         this.props.navigation.navigate('MeHome');
         //RNRestart.Restart();
