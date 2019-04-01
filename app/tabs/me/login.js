@@ -9,9 +9,15 @@ import {
     AsyncStorage,
     StyleSheet,
     TouchableOpacity,
+    Alert,
+    forceRemount,
 } from 'react-native';
 import { createStackNavigator } from "react-navigation";
 import { ThemeConsumer } from 'react-native-elements';
+//import { Me } from '../me.js';
+
+//import RNRestart from 'react-native-restart';
+
 
 
 
@@ -33,7 +39,6 @@ export default class Login extends React.Component {
 
 
 
-
     //login check preko POST API
     loginCheck() {
         fetch('http://centarsmijeha.com/api/login', {
@@ -48,27 +53,66 @@ export default class Login extends React.Component {
             })
         }).then(response => response.json())
             .then(response => {
-                //postavljanje nove vrijednosti
-                this.setState({
-                    loginCheckExist: response.exist,
-                    userID: response.id,
-                    role: response.role,
-                    name: response.name
-                }, () => console.log(this.state.loginCheckExist + "\n" + this.state.userID + "\n" + this.state.role + "\n" + this.state.name));
+                //DA LI SU TACNE INFORMACIJEEEEEE
+
+                if (response.exist == 'yes') {
+
+                    //postavljanje nove vrijednosti
+                    AsyncStorage.setItem('username', JSON.stringify(response.name));
+                    AsyncStorage.setItem('userID', JSON.stringify(response.id));
+                    this.setState({
+                        loginCheckExist: response.exist,
+                        userID: response.id,
+                        role: response.role,
+                        name: response.name
+                    }, () => console.log(this.state.loginCheckExist + "\n" + this.state.userID + "\n" + this.state.role + "\n" + this.state.name));
+
+                    //obavijestiti ga da je prijavljen uspijesno 
+                    Alert.alert(
+                        'Prijava',
+                        'Uspiješno ste prijavljeni',
+                        [
+                            { text: 'Ok', onPress: () => this.restartAppAfterLogin() },
+                            //MeHome
+                        ],
+                        { cancelable: false },
+                    );
+
+                } else {
+                    //wrong login info
+                    Alert.alert(
+                        'Prijava',
+                        'Unesite pravilne vrijednosti za prijavu',
+                        [
+                            { text: 'Ok', onPress: () => console.log('wrongInfo') },
+                        ],
+                        { cancelable: false },
+                    );
+
+                }
+
+
 
             })
 
-        //postavljanje vrijednosti u async
-        let user = {
-            name: this.state.name,
-            ID: this.state.userID,
-            userRole: this.state.role,
-        }
+
+
+        //call function for setting item 
+
 
         //postaviti vrijednosti u ASYNC
-        AsyncStorage.setItem('korisnik', JSON.stringify(user));
+        //AsyncStorage.setItem('korisnik', JSON.stringify(user));
+        //AsyncStorage.setItem('username', JSON.stringify(this.state.name));
+        //console.warn(this.state.name);
+
+    }
 
 
+    restartAppAfterLogin() {
+        console.warn('Restart App');
+        //        Me.ComponentDidMount();
+        this.props.navigation.navigate('MeHome');
+        //RNRestart.Restart();
     }
 
 
@@ -90,8 +134,9 @@ export default class Login extends React.Component {
                 />
 
                 <TextInput style={styles.unosTexta}
-
+                    secureTextEntry={true}
                     placeholder='Unesite vas password'
+                    password={true}
                     onChangeText={(password) => this.setState({ password })}
                     value={this.state.password}
                 />

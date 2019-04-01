@@ -9,8 +9,11 @@ import {
     AsyncStorage,
     TouchableOpacity,
     StyleSheet,
+    renderIf,
 } from 'react-native';
-import { createStackNavigator, createAppContainer, StackNavigator, navigate } from 'react-navigation';
+import { createStackNavigator, createAppContainer, StackNavigator, navigate, StackActions, NavigationActions, NavigationEvents } from 'react-navigation';
+
+//import console = require('console');
 
 
 export default class Me extends React.Component {
@@ -23,6 +26,51 @@ export default class Me extends React.Component {
             name: 'test',
         }
     }
+
+    //componentDidMount = () => AsyncStorage.getItem('username').then((value) => this.setState({ 'name': value, loggedin: true }));
+
+    async componentDidMount() {
+
+        let value = await AsyncStorage.getItem('username');
+        if (value != null) {
+
+            var test = value;
+            this.setState({
+                name: value,
+                loggedin: true
+            });
+
+            console.warn(this.state.name);
+
+        }
+
+        console.warn(this.state.loggedin);
+
+    }
+
+
+
+    //navigacija
+    goOnLogin() {
+        this.props.navigation.navigate('Login');
+    }
+
+
+
+    logoutFunction = async () => {
+        AsyncStorage.clear();
+
+        this.setState({
+            loggedin: false,
+            name: 'testLoggedOut'
+        });
+
+        this.componentDidMount();
+
+    }
+
+
+
 
     //provjeriti da li je user prijavljen 
     /* async componentDidMount() {
@@ -46,20 +94,19 @@ export default class Me extends React.Component {
         return (
             <ScrollView>
 
-                <Text> {this.state.name} </Text>
+                <NavigationEvents onDidFocus={() => this.componentDidMount()} />
 
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Login')}
+
+
+
+
+
+                {this.state.loggedin != true ? <TouchableOpacity
+                    onPress={() => this.goOnLogin()}
                 >
                     <Text style={styles.dugme}> Prijava </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> : null}
 
-
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Register')}
-                >
-                    <Text style={styles.dugme}> Registracija </Text>
-                </TouchableOpacity>
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('SendJoke')}
@@ -72,6 +119,14 @@ export default class Me extends React.Component {
                 >
                     <Text style={styles.dugme}> Admin Panel </Text>
                 </TouchableOpacity>
+
+
+
+                {this.state.loggedin ? <TouchableOpacity
+                    onPress={this.logoutFunction}
+                >
+                    <Text style={styles.dugme}> Odjava </Text>
+                </TouchableOpacity> : null}
 
 
             </ScrollView>

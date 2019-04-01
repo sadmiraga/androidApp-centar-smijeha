@@ -1,5 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
+import {
+    StyleSheet,
+    AsyncStorage,
+    Text,
+    View,
+    ActivityIndicator,
+    ScrollView,
+    RefreshControl,
+    TouchableOpacity,
+} from 'react-native';
 export default class Svivicevi extends React.Component {
 
     //CONSTRUCTOR
@@ -9,11 +18,26 @@ export default class Svivicevi extends React.Component {
             isLoading: true,
             dataSource: null,
             refreshing: false,
+            showLikes: false,
         }
     }
 
     //loading data
-    componentDidMount() {
+    async componentDidMount() {
+
+
+        //check if user is logged in 
+        let value = await AsyncStorage.getItem('userID');
+
+        if (value != null) {
+            this.setState({
+                showLikes: true
+            });
+        }
+
+        console.warn(this.state.showLikes);
+
+        //get All jokes
         return fetch('http://centarsmijeha.com/api/help')
             .then((response) => response.json())
             .then((responseJson) => {
@@ -25,6 +49,7 @@ export default class Svivicevi extends React.Component {
             .catch((error) => {
                 console.log(error)
             });
+
     }
 
     //refreshing
@@ -34,6 +59,12 @@ export default class Svivicevi extends React.Component {
         this.setState({
             refreshing: false
         })
+    }
+
+
+    likeFunction(ID) {
+
+        console.warn(ID);
     }
 
 
@@ -47,7 +78,10 @@ export default class Svivicevi extends React.Component {
         } else {
             let data = this.state.dataSource.map((val, key) => {
 
-                return <View key={key} style={styles.item}><Text>{val.jokeText}</Text></View>
+                return <View key={key} style={styles.item}>
+                    <Text>{val.jokeText}</Text>
+
+                </View>
 
             });
             return (

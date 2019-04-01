@@ -31,6 +31,7 @@ export const meStack = createStackNavigator({
     MeHome: {
         screen: Me,
         navigationOptions: {
+            unmountInactiveRoutes: true,
             title: 'Moj Profil'
         }
     },
@@ -56,6 +57,7 @@ export const meStack = createStackNavigator({
     Login: {
         screen: Login,
         navigationOptions: {
+            unmountInactiveRoutes: true,
             title: 'Prijava'
         },
     },
@@ -83,6 +85,7 @@ export const categoriesFeedStack = createStackNavigator({
     SveKategorije: {
         screen: SveKategorije,
         navigationOptions: {
+            unmountInactiveRoutes: true,
             title: 'KATEGORIJE',
         },
     },
@@ -101,6 +104,7 @@ export const Tabs = createBottomTabNavigator({
     Categories: {
         screen: categoriesFeedStack,
         navigationOptions: {
+            unmountInactiveRoutes: true,
             title: 'Kategorije',
             label: 'Kategorije',
             tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />,
@@ -110,6 +114,7 @@ export const Tabs = createBottomTabNavigator({
     Home: {
         screen: Home,
         navigationOptions: {
+            unmountInactiveRoutes: true,
             title: 'Pocetna',
             label: 'Kategorije',
             tabBarIcon: ({ tintColor }) => <Icon name="home" size={35} color={tintColor} />,
@@ -119,6 +124,7 @@ export const Tabs = createBottomTabNavigator({
     Me: {
         screen: meStack,
         navigationOptions: {
+            unmountInactiveRoutes: true,
             title: 'Profil',
             label: 'Kategorije',
             tabBarIcon: ({ tintColor }) => <Icon name="account-circle" size={35} color={tintColor} />,

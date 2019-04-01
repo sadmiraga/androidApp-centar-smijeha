@@ -26,12 +26,23 @@ export default class SendJoke extends React.Component {
             kategorija: 'test',
             isLoading: true,
             dataSource: null,
+            user_id: 1,
         }
     }
 
 
     //loading data
-    componentDidMount() {
+    async componentDidMount() {
+
+        //provjeriti da li je user prijavljen 
+        let value = await AsyncStorage.getItem('userID');
+
+        if (value != null) {
+            this.setState({
+                user_id: value,
+            });
+        }
+
         return fetch('http://centarsmijeha.com/api/allCategories')
             .then((response) => response.json())
             .then((responseJson) => {
@@ -43,6 +54,7 @@ export default class SendJoke extends React.Component {
             .catch((error) => {
                 console.log(error)
             });
+
     }
 
     //notifikacija da je vic poslan
@@ -73,7 +85,8 @@ export default class SendJoke extends React.Component {
             },
             body: JSON.stringify({
                 'jokeText': $text,
-                'category_id': $kategorija
+                'category_id': $kategorija,
+                'user_id': this.state.user_id
             })
         })
 
