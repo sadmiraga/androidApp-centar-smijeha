@@ -27,8 +27,8 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: 'sadmirvela@gmail.com',
-            password: 'mlijeko123',
+            email: '',
+            password: '',
             loginCheckExist: 'no',
             userID: 0,
             role: 0,
@@ -123,7 +123,7 @@ export default class Login extends React.Component {
         return (
             <ScrollView>
 
-                <Text> {this.state.name} </Text>
+
 
 
                 <TextInput style={styles.unosTexta}
@@ -162,6 +162,11 @@ const styles = StyleSheet.create({
         marginLeft: '15%',
         marginRight: '15%',
         marginTop: '2%',
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: 'black'
     },
     posaljiDugme: {
         backgroundColor: '#00B2EE',
@@ -170,7 +175,12 @@ const styles = StyleSheet.create({
         width: '70%',
         marginLeft: '15%',
         marginRight: '15%',
-        marginTop: '2%'
+        marginTop: '2%',
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: 'black'
     },
 });
 

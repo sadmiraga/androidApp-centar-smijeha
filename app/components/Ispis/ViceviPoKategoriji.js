@@ -1,5 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView, RefreshControl } from 'react-native';
+import {
+    StyleSheet,
+    AsyncStorage,
+    Text,
+    View,
+    ActivityIndicator,
+    ScrollView,
+    RefreshControl,
+    TouchableOpacity,
+    Alert
+} from 'react-native';
 
 
 export default class ViceviPoKategoriji extends React.Component {
@@ -10,10 +20,10 @@ export default class ViceviPoKategoriji extends React.Component {
         this.state = {
             isLoading: true,
             dataSource: null,
+            showLikes: false,
+            userId: 1,
         }
     }
-
-
 
     //title
     static navigationOptions = ({ navigation, screenProps }) => ({
@@ -21,7 +31,19 @@ export default class ViceviPoKategoriji extends React.Component {
     });
 
     //loading data
-    componentDidMount() {
+    async componentDidMount() {
+
+        //check if user is logged in 
+        let value = await AsyncStorage.getItem('userID');
+
+        if (value != null) {
+            this.setState({
+                showLikes: true,
+                userId: value,
+            });
+        }
+
+
         var test = 'http://centarsmijeha.com/api/jokesByCategory/';
         var final = `${test} ${this.props.navigation.state.params.ID}`;
         return fetch(final)
@@ -46,6 +68,72 @@ export default class ViceviPoKategoriji extends React.Component {
         })
     }
 
+    async likeFunction(jokeID) {
+
+        //get user data
+        let value = await AsyncStorage.getItem('userID');
+
+        if (value != null) {
+            this.setState({
+                showLikes: true,
+                userId: value
+            });
+        } else {
+            this.setState({
+                showLikes: false,
+                userId: 1
+            })
+        }
+
+
+        //check if user is logged in 
+        if ((this.state.userId) == 1) {
+
+            Alert.alert(
+                'Sviđa mi se',
+                "Morate se prijaviti da bi viceve označavali sa 'sviđa mi se' ",
+                [
+                    { text: 'Ok', onPress: () => console.log('ok Pressed') },
+                    //MeHome
+                ],
+                { cancelable: false },
+            );
+        } else {
+            //USER IS LOGGED IN 
+            //EXECUTE LIKE FUNCTION 
+
+            fetch('http://centarsmijeha.com/api/like', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'userID': this.state.userId,
+                    'jokeID': jokeID
+                })
+            }).then(response => response.json())
+                .then(response => {
+
+                    Alert.alert(
+                        'Sviđa mi se',
+                        response.message,
+                        [
+                            { text: 'Ok', onPress: () => console.log('ok Pressed') },
+                            //MeHome
+                        ],
+                        { cancelable: false },
+                    );
+
+                })
+
+            //kraj else
+        }
+
+
+        //kraj funkcije
+    }
+
 
     render() {
         //{this.props.navigation.state.params.naslov}
@@ -59,7 +147,20 @@ export default class ViceviPoKategoriji extends React.Component {
         } else {
             let data = this.state.dataSource.map((val, key) => {
 
-                return <View key={key} style={styles.item}><Text>{val.jokeText}</Text></View>
+                return <View key={key} style={styles.item}>
+
+                    <Text>{val.jokeText}</Text>
+
+                    <TouchableOpacity
+                        style={styles.likeButton}
+                        onPress={() => this.likeFunction(val.id)}
+                    >
+                        <Text  >
+                            Sviđa mi se
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
 
             });
             return (
@@ -95,6 +196,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: '#eee'
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: 'black'
+    },
+    likeButton: {
+        backgroundColor: '#00B2EE',
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
     }
 });

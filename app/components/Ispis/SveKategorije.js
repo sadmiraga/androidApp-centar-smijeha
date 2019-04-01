@@ -57,14 +57,15 @@ export default class SveKategorije extends React.Component {
                 return (
 
 
-                    <View key={key} style={styles.item}>
+                    <View key={key} style={styles.container}>
 
 
 
                         <TouchableOpacity
+                            style={styles.dugme}
                             onPress={() => this.props.navigation.navigate('ViceviPoKategoriji', { ID: val.id, naslov: val.categoryName, })}
                         >
-                            <Text style={styles.dugme}> {val.categoryName} </Text>
+                            <Text > {val.categoryName} </Text>
                         </TouchableOpacity>
 
 
@@ -99,23 +100,34 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%'
+        width: '70%',
+        marginRight: '15%',
+        marginLeft: '15%',
     },
     item: {
         flex: 1,
         alignSelf: 'stretch',
-        width: '100%',
         textAlign: 'center',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: 'black'
     },
     dugme: {
         backgroundColor: '#00B2EE',
+        alignSelf: 'stretch',
         textAlign: 'center',
+        alignItems: 'center',
         color: 'white',
-        width: '70%',
-        marginLeft: '15%',
-        marginRight: '15%',
-        marginTop: '2%'
+        width: '100%',
+        marginTop: '2%',
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: 'black'
     }
 });

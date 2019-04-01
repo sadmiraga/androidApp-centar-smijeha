@@ -176,7 +176,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#00BFFF',
         width: '70%',
         marginLeft: '15%',
-        marginRight: '15%'
+        marginRight: '15%',
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: 'black'
 
     },
 
@@ -187,7 +192,12 @@ const styles = StyleSheet.create({
         width: '70%',
         marginLeft: '15%',
         marginRight: '15%',
-        marginTop: '2%'
+        marginTop: '2%',
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: 'black'
     },
 
     dropDownMeni: {
@@ -197,6 +207,11 @@ const styles = StyleSheet.create({
         marginLeft: '15%',
         marginRight: '15%',
         marginTop: '2%',
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: 'black'
     },
 
     container: {

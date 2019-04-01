@@ -55,6 +55,8 @@ export default class Svivicevi extends React.Component {
                 console.log(error)
             });
 
+
+
     }
 
     //refreshing
@@ -138,7 +140,7 @@ export default class Svivicevi extends React.Component {
     render() {
         if (this.state.isLoading) {
             return (
-                <View style={styles.container}>
+                <View  >
                     <ActivityIndicator />
                 </View>
             )
@@ -153,9 +155,10 @@ export default class Svivicevi extends React.Component {
                     <Text>{val.jokeText}</Text>
 
                     <TouchableOpacity
+                        style={styles.likeButton}
                         onPress={() => this.likeFunction(val.id)}
                     >
-                        <Text style={styles.likeButton} >
+                        <Text  >
                             Sviđa mi se
                         </Text>
                     </TouchableOpacity>
@@ -209,5 +212,5 @@ const styles = StyleSheet.create({
         borderRightWidth: 1,
         borderLeftWidth: 1,
         borderTopWidth: 1,
-    }
+    },
 });
