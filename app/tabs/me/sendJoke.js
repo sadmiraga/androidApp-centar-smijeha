@@ -59,14 +59,27 @@ export default class SendJoke extends React.Component {
 
     //notifikacija da je vic poslan
     jokeSentNotification() {
-        Alert.alert(
-            "Vic poslan",
-            "Vaš vic je poslan, prije nego što vic bude objavljen potrebno je da bude odobren od strane admina.",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ],
-            { cancelable: false }
-        );
+
+        if (this.state.vic == '') {
+            Alert.alert(
+                "Greška",
+                "Morate popuniti sve podatke prije nego sto posaljete vic",
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ],
+                { cancelable: false }
+            );
+        } else {
+            Alert.alert(
+                "Vic poslan",
+                "Vaš vic je poslan, prije nego što vic bude objavljen potrebno je da bude odobren od strane admina.",
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ],
+                { cancelable: false }
+            );
+        }
+
     }
 
 
